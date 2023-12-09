@@ -7,40 +7,35 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            background-color: #ecf0f1; /* Couleur de fond */
             margin: 0;
             padding: 0;
         }
-        header {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-        }
-        nav {
-            background-color: #444;
-            padding: 10px;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        section {
-            padding: 20px;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
+        #loader {
             position: fixed;
-            bottom: 0;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background-color: #3498db; /* Couleur du fond de l'effet de chargement */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+        #loader h1 {
+            color: #fff; /* Couleur du texte de l'effet de chargement */
+        }
+        header, nav, section, footer {
+            display: none; /* Cacher le contenu avant le chargement complet */
         }
     </style>
 </head>
 <body>
+
+    <div id="loader">
+        <h1>Chargement en cours...</h1>
+    </div>
 
     <header>
         <h1>BlowerFac</h1>
@@ -81,6 +76,20 @@
     <footer>
         <p>&copy; 2023 BlowerFac - Paladium</p>
     </footer>
+
+    <script>
+        window.addEventListener('load', function () {
+            // Retirez la superposition de chargement une fois que la page est complètement chargée
+            var loader = document.getElementById('loader');
+            loader.style.display = 'none';
+
+            // Affichez le contenu après le chargement complet
+            var contentSections = document.querySelectorAll('header, nav, section, footer');
+            contentSections.forEach(function (section) {
+                section.style.display = 'block';
+            });
+        });
+    </script>
 
 </body>
 </html>
