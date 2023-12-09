@@ -38,7 +38,7 @@
 <body>
 
     <div id="loader">
-        <h1>Chargement en cours...</h1>
+        <h1>Chargement en cours<span id="loadingDots"></span></h1>
     </div>
 
     <header>
@@ -83,18 +83,35 @@
 
     <script>
         window.addEventListener('load', function () {
-            // Retirez la superposition de chargement une fois que la page est complètement chargée
             var loader = document.getElementById('loader');
-            loader.style.opacity = '0';
+            var loadingDots = document.getElementById('loadingDots');
 
-            // Affichez le contenu après le chargement complet
-            var contentSections = document.querySelectorAll('header, nav, section, footer');
-            contentSections.forEach(function (section) {
-                section.style.opacity = '1';
-            });
+            // Fonction pour mettre à jour les points
+            function updateDots() {
+                var dots = loadingDots.innerHTML;
+                dots = dots.length < 5 ? dots + '.' : '.';
+                loadingDots.innerHTML = dots;
+            }
 
-            // Rétablissez la barre de défilement après le chargement
-            document.body.style.overflow = 'auto';
+            // Interval pour ajouter progressivement des points
+            var dotsInterval = setInterval(updateDots, 500);
+
+            // Retirez la superposition de chargement après 3 secondes
+            setTimeout(function () {
+                loader.style.opacity = '0';
+
+                // Arrêtez l'ajout de points
+                clearInterval(dotsInterval);
+
+                // Affichez le contenu après le chargement complet
+                var contentSections = document.querySelectorAll('header, nav, section, footer');
+                contentSections.forEach(function (section) {
+                    section.style.opacity = '1';
+                });
+
+                // Rétablissez la barre de défilement après le chargement
+                document.body.style.overflow = 'auto';
+            }, 3000);
         });
     </script>
 
